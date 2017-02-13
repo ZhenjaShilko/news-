@@ -4,3 +4,6 @@ nothing to commit, working tree clean
 (use "git add <file>..." to include in what will be committed)
 
        ./
+(use "git add <file>..." to include in what will be committed)
+
+       info.txt
