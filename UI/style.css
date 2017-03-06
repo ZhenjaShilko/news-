@@ -1,0 +1,119 @@
+.b{
+  background: rgb(172, 183, 142); 
+}
+.header {
+  overflow: auto;
+  margin-bottom: 10px;
+  background: rgb(0,0,0);
+}
+
+.header .head-title {
+  color: blue;
+  font-size: 50px;
+  text-align: center;
+}
+
+.header .logo{
+  float: left;
+  
+}
+.header .log-in-out{
+  color: white;
+  float: right;
+}
+
+.log-in-out:hover{
+  background: white;
+}
+.log-in-out input {
+  background: transparent;
+  border: 1px solid blue; 
+  color: blue;
+}
+
+.header .add-news {
+  float: right;
+}
+
+.add-news:hover{
+  background: white;
+}
+.add-news input {
+  background: transparent;
+  border: 1px solid blue;
+  color: blue;
+}
+
+/* Filtration*/
+.filtr-and-home{
+  overflow: auto;
+  background: rgb(0,0,0);
+}
+
+.filtr-and-home .filtration {
+  float: left;
+  color: blue;
+  padding: .7em 1.5em;
+}
+
+
+.filtr-and-home .home-button{
+  float: right;
+  text-decoration: none; /* убирать подчёркивание у ссылок */
+  padding: .7em 1.5em; /* отступ от текста */
+  
+}
+.button-noch{
+  text-align: center;
+}
+
+
+
+/*-------*/
+
+/* Contect */
+.content{
+  overflow: auto;
+  
+}
+.content .n1{
+  overflow: auto;
+}
+.content .n1 .data{
+  float: left;
+  font-weight: 50;
+  line-height: 0px;
+  font-style: italic;
+   
+}
+.content .n1 .categorie{
+  line-height: 0px;
+  float: right;
+  font-weight: 10;
+  overflow: auto;
+  font-style: italic;
+}
+.content .n1 .news{
+  float: left;
+  font-weight: bold;
+  font-size: 18pt;
+}
+/* -------*/
+
+/* Footer */
+.footer{
+  background: rgb(0,0,0);
+  overflow: auto;
+}
+.footer .google{
+  float: left;
+}
+.footer .create{
+  color: white;
+  float: right;
+}
+/* ------ */
+
+.clear {
+  clear: both;
+}
