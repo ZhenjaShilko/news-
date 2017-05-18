@@ -1,31 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-<meta charset="UTF-8">
-<title>NEWS-PORTAL</title>
-<link rel="stylesheet" href="style.css"/>
+	<meta charset="UTF-8">
+	<title>NEWS-PORTAL</title>
+	<link rel="stylesheet" href="style.css"/>
 </head>
 
 <body class="b">
 	<div class="header">
-		<script>
-    alert( 'Привет, Мир!' );
-  </script>
 		<div class="logo"><img src="C:\Users\ZHENJA\news-portal\UI\n.jpg" width="200" height="200" ></div>
 		<div class="head-title">NEWS</div>
-		<div class="log-in-out">
-			<input type="button" value="log-in"/>
-		</div>
+		<div class="log-in-out"></div>
 		<div class="clear"> </div>
-		<hr>
+			<hr>
 		<div class="add-news clear">
-			<input type="button" value="add news"/>
+			<input type="button" value="add news" onclick="new ArticleAddContainer().render()"/>
 		</div>
 
 			<div class="clear"> </div>
 			
-	</div>
+		</div>
 	<div class="filtr-and-home">
 		<div class="filtration">
 			<select>
@@ -42,84 +37,12 @@
 		
 	</div>
 	<div class="content">
-		<div class="n1">
-			<div class="data"><p>02.03.2017 21:33</p></div>
-			<div class="categorie"><p>спорт</p></div>
-			<div class="clear"> </div>
-			<div class="news" align="center"><p>Кураньи не перейдет в Динамо Брест</p></div>
-		</div>
-		<hr>
-		<div class="n1">
-			<div class="data"><p>02.03.2017 21:33</p></div>
-			<div class="categorie"><p>политика</p></div>
-			<div class="clear"> </div>
-			<div class="news"><p>Министр Заяц гарантирует Данкверту, что тот вернется в Россию после визита в Беларусь</p></div>
-		</div>
-		<hr>
-		<div class="n1">
-			<div class="data"><p>02.03.2017 21:33</p></div>
-			<div class="categorie"><p>финансы</p></div>
-			<div class="clear"> </div>
-			<div class="news"><p>На торгах 6 марта рубль окреп только к доллару</p></div>
-		</div>
-		<hr>
-		<div class="n1">
-			<div class="data"><p>02.03.2017 21:33</p></div>
-			<div class="categorie"><p>происшествия</p></div>
-			<div class="clear"> </div>
-			<div class="news"><p>После "Марша нетунеядцев" в Бресте будут судить как минимум семь человек</p></div>
-		</div>
-		<hr>
-		<div class="n1">
-			<div class="data"><p>02.03.2017 21:33</p></div>
-			<div class="categorie"><p>авто</p></div>
-			<div class="clear"> </div>
-			<div class="news"><p>Минтранс не будет вносить изменения в механизм сбора дорожного налога</p></div>
-		</div>
-		<hr>
-		<div class="n1">
-			<div class="data"><p>02.03.2017 21:33</p></div>
-			<div class="categorie"><p>общество</p></div>
-			<div class="clear"> </div>
-			<div class="news"><p>Минчан просят выбрать самую красивую из самых странных обитательниц столичного зоопарка</p></div>
-		</div>
-		<hr>
-		<div class="n1">
-			<div class="data"><p>02.03.2017 21:33</p></div>
-			<div class="categorie"><p>финансы</p></div>
-			<div class="clear"> </div>
-			<div class="news"><p>Грозит ли Беларуси банковский кризис?
-			</p></div>
-		</div>
-		<hr></p></div>
+
+
+
 	</div>
-	<hr>
-	<div class="n1">
-		<div class="data"><p>02.03.2017 21:33</p></div>
-		<div class="categorie"><p>общество</p></div>
-		<div class="clear"> </div>
-		<div class="news"><p>Зарплата минчан в 1,5 раза превышает среднюю по стране
-		</p></div>
-	</div>
-	<hr>
-	<div class="n1">
-		<div class="data"><p>02.03.2017 21:33</p></div>
-		<div class="categorie"><p>политика</p></div>
-		<div class="clear"> </div>
-		<div class="news"><p>Международный суд ООН рассматривает иск Украины против России
-		</p></div>
-	</div>
-	<hr>
 	<div class="button-noch"><input type="button" value="Еще"/>
 	</div>
-	</div>
-
-	<div class="n1">
-			<div class="data"><p>02.03.2017 21:33</p></div>
-			<div class="categorie"><p>политика</p></div>
-			<div class="clear"> </div>
-			<div class="news"><p>Уходящий президент Франции рассказал о своем "последнем долге"
-
 	<div class="footer">
 		<div class="google"><img src="C:\Users\ZHENJA\news-portal\UI\google.png"></div>
 		<div class="create"><p>2017@NEWS</p><p>Created by Zhenja Shilko</p></div>
@@ -129,6 +52,19 @@
 	<script src="../js/util/config.js"></script>
 	<script src="../js/util/util.js"></script>
 	<script src="../js/service/article-service.js"></script>
+	<script src="../js/service/user-service.js"></script>
+	<script src="../js/component/view/view-article-list-item.js"></script>
+	<script src="../js/component/view/view-article-list.js"></script>
+	<script src="../js/component/container/container-articles-list.js"></script>
+	<script src="../js/component/user-component.js"></script>
+	<script src="../js/component/view/article-detail-view.js"></script>
+	<script src="../js/component/container/article-detail-container.js"></script>
+	<script src="../js/component/view/article-add-view.js"></script>
+	<script src="../js/component/container/article-add-container.js"></script>
+	<script src="../js/component/view/article-edit-view.js"></script>
+	<script src="../js/component/container/article-edit-container.js"></script>
+	<script src="../js/router/router.js"></script>
+
 
 </body>
 </html>
