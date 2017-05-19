@@ -22,9 +22,10 @@
 
         render(user) {
 
+            console.log(user);
+
             if  (!user) return;
 
-            userService.setCurrentUser(user);
             let logInCell = document.querySelector('div.log-in-out');
             logInCell.innerHTML = '';
             let userNameLabel = document.createElement('label');

@@ -3,7 +3,21 @@
     'use strict';
 
     let articleService = {};
-    articleService.getArticle = id => articles.find(article => article.id === id);
+    //articleService.getArticle = id => articles.find(article => article.id === id);
+
+    articleService.getArticle = id => {
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:3000/article/'+id+'', false);
+        xhr.send();
+
+        let article = JSON.parse(xhr.responseText, (key, value) => {
+            if (key === 'createdAt') return new Date(value);
+            return value;
+        });
+
+        return article;
+    };
 
     function classOf(o) {
         if (o === null) return "Null";
@@ -19,14 +33,29 @@
     };
 
     articleService.addArticle = article => {
-        if (!articleService.isArticleValid(article)) return;
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:3000/article', false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(article));
+
+        /*if (!articleService.isArticleValid(article)) return;
         articles.unshift(article);
         articleService.saveChanges(articles);
         return article;
+
+        */
     };
 
     articleService.editArticle = (id, article) => {
-        if (!article) return false;
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('PATCH', 'http://localhost:3000/article', false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({id: id, article: article}));
+
+
+        /*if (!article) return false;
         let currentArticle = articleService.getArticle(id);
         if (!currentArticle) return false;
 
@@ -44,16 +73,25 @@
         articles[articles.indexOf(currentArticle)] = articleClone;
         articleService.saveChanges(articles);
         return true;
+
+        */
     };
 
     articleService.removeArticle = (id) => {
-        if (!id) return;
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('DELETE', 'http://localhot:3000/article', false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({id: id}));
+
+        /*if (!id) return;
         let article = articleService.getArticle(id);
         if (!article) return;
         let index = articles.indexOf(article);
         articles.splice(index, 1);
         articleService.saveChanges(articles);
         return article;
+        */
     };
 
     articleService.addTag = (tagName, article) => {
@@ -73,7 +111,19 @@
     };
 
     articleService.getArticles = (skip, top, filter = {}) => {
-        let filterTags = filter.tags || [];
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:3000/articles', false);
+        xhr.send();
+
+        let articles = JSON.parse(xhr.responseText, (key, value) => {
+            if (key === 'createdAt') return new Date(value);
+            return value;
+        });
+
+        return articles;
+
+        /*let filterTags = filter.tags || [];
         delete filter.tags;
         let filterKeys = Object.keys(filter);
         let filteredArticles = articles.filter(article => {
@@ -86,6 +136,8 @@
         //skip = util.skipNumberValid(skip, filteredArticles.length);
         //top = util.topNumberValid(top);
         return filteredArticles;
+
+        */
     };
 
     articleService.saveChanges = updateArticles => {

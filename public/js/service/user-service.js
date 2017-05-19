@@ -2,28 +2,29 @@
 
     let userService = {};
 
-    userService.setCurrentUser = (user) => {
-      if (!user) return;
-
-      localStorage.setItem('currentUser', JSON.stringify(user));
-    };
-
     userService.getCurrentUser = () => {
-        let user = localStorage.getItem('currentUser');
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:3000/current_user', false);
+        xhr.send();
 
-        if (user == null) return;
-        return JSON.parse(user);
+        return (xhr.status !== 400)? JSON.parse(xhr.responseText): undefined;
     };
 
     userService.auth = (user)=> {
-        let users = JSON.parse(localStorage.getItem('users'));
-        if (!users) return;
+        if (!user) return;
 
-        return users.find(u => u.username === user.username && u.password === user.password);
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:3000/user', false);
+        xhr.setRequestHeader('Content-Type', 'application/json', false);
+        xhr.send(JSON.stringify(user));
+
+        return (xhr.status !== 400)? JSON.parse(xhr.responseText): undefined;
     };
 
     userService.removeCurrentUser = () => {
-        localStorage.removeItem('currentUser');
+       let xhr = new XMLHttpRequest();
+       xhr.open('DELETE', 'http://localhost:3000/logout');
+       xhr.send();
     };
 
     window.userService = userService;
