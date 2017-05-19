@@ -8,8 +8,9 @@
         render() {
             let feed = document.querySelector('div.content');
             feed.innerHTML = '';
-            let article = articleService.getArticle(this.articleId);
-            feed.appendChild(new ArticleDetailView(article).render());
+            articleService.getArticle(this.articleId).then(article => {
+                feed.appendChild(new ArticleDetailView(article).render());
+            });
         }
     }
 

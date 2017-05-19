@@ -22,8 +22,6 @@
 
         render(user) {
 
-            console.log(user);
-
             if  (!user) return;
 
             let logInCell = document.querySelector('div.log-in-out');

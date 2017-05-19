@@ -8,13 +8,16 @@
         render() {
             let feed = document.querySelector('div.content');
             feed.innerHTML = '';
-            feed.appendChild(new ArticleEditView(articleService.getArticle(this.articleId), this.callback(this.onAddClicked), this.callback(this.onBackClicked)).render());
+            articleService.getArticle(this.articleId).then((article) => {
+                feed.appendChild(new ArticleEditView(article, this.callback(this.onAddClicked), this.callback(this.onBackClicked)).render());
+            })
         }
 
         onAddClicked(article) {
 
-            articleService.editArticle(this.articleId, article);
-            new ArticleListContainer().init();
+            articleService.editArticle(this.articleId, article).then(() => {
+                new ArticleListContainer().init();
+            });
         }
 
         onBackClicked() {

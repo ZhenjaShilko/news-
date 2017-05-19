@@ -14,8 +14,9 @@
         onAddClicked(article) {
             if (!article.id) article.id = Date.now().toString();
 
-            articleService.addArticle(article);
-            new ArticleListContainer().init();
+            articleService.addArticle(article).then(() => {
+                new ArticleListContainer().init();
+            });
         }
 
         callback(fn) {

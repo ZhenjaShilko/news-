@@ -5,8 +5,10 @@
     }
 
     init() {
-        this.articles = articleService.getArticles(0, 10);
-        this.render();
+        articleService.getArticles(0, 10).then(articles => {
+            this.articles = articles;
+            this.render();
+        });
     }
 
     render() {

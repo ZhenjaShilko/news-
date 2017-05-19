@@ -7,16 +7,20 @@
 
     articleService.getArticle = id => {
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/article/'+id+'', false);
-        xhr.send();
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost:3000/article/'+id+'', true);
+            xhr.send();
 
-        let article = JSON.parse(xhr.responseText, (key, value) => {
-            if (key === 'createdAt') return new Date(value);
-            return value;
+            xhr.onload = () => {
+                let article = JSON.parse(xhr.responseText, (key, value) => {
+                    if (key === 'createdAt') return new Date(value);
+                    return value;
+                });
+
+                resolve(article);
+            }
         });
-
-        return article;
     };
 
     function classOf(o) {
@@ -34,10 +38,17 @@
 
     articleService.addArticle = article => {
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost:3000/article', false);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify(article));
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:3000/article', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(article));
+
+            xhr.onload = () => {
+                resolve();
+            }
+        });
+
 
         /*if (!articleService.isArticleValid(article)) return;
         articles.unshift(article);
@@ -49,10 +60,17 @@
 
     articleService.editArticle = (id, article) => {
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('PATCH', 'http://localhost:3000/article', false);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({id: id, article: article}));
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('PATCH', 'http://localhost:3000/article', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({id: id, article: article}));
+
+            xhr.onload = () => {
+                resolve();
+            }
+        });
+
 
 
         /*if (!article) return false;
@@ -112,16 +130,20 @@
 
     articleService.getArticles = (skip, top, filter = {}) => {
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/articles', false);
-        xhr.send();
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost:3000/articles', true);
+            xhr.send();
 
-        let articles = JSON.parse(xhr.responseText, (key, value) => {
-            if (key === 'createdAt') return new Date(value);
-            return value;
+            xhr.onload = () => {
+                let articles = JSON.parse(xhr.responseText, (key, value) => {
+                    if (key === 'createdAt') return new Date(value);
+                    return value;
+                });
+
+                resolve(articles);
+            }
         });
-
-        return articles;
 
         /*let filterTags = filter.tags || [];
         delete filter.tags;
