@@ -3,28 +3,46 @@
     let userService = {};
 
     userService.getCurrentUser = () => {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/current_user', false);
-        xhr.send();
 
-        return (xhr.status !== 400)? JSON.parse(xhr.responseText): undefined;
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost:3000/current_user', true);
+            xhr.send();
+
+            xhr.onload = () => {
+                let user = (xhr.status !== 400) ? JSON.parse(xhr.responseText) : undefined;
+                resolve(user);
+            }
+        })
     };
 
     userService.auth = (user)=> {
         if (!user) return;
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost:3000/user', false);
-        xhr.setRequestHeader('Content-Type', 'application/json', false);
-        xhr.send(JSON.stringify(user));
+        return new Promise((resolve, reject) => {
 
-        return (xhr.status !== 400)? JSON.parse(xhr.responseText): undefined;
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:3000/user', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(user));
+
+            xhr.onload = () => {
+                let user = (xhr.status !== 400)? JSON.parse(xhr.responseText): undefined;
+                resolve(user);
+            }
+        });
     };
 
     userService.removeCurrentUser = () => {
-       let xhr = new XMLHttpRequest();
-       xhr.open('DELETE', 'http://localhost:3000/logout');
-       xhr.send();
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('DELETE', 'http://localhost:3000/logout');
+            xhr.send();
+
+            xhr.onload = () => {
+                resolve();
+            }
+        })
     };
 
     window.userService = userService;

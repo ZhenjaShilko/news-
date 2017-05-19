@@ -7,17 +7,18 @@
         }
 
         init() {
-            let currentUser = userService.getCurrentUser();
-            let logInCell = document.querySelector('div.log-in-out');
-            if  (!currentUser) {
-                let signInButton = document.createElement('button');
-                signInButton.textContent = 'sign-in';
-                signInButton.addEventListener('click', this.signInClicked.bind(this));
-                logInCell.appendChild(signInButton);
-                return;
-            }
+            userService.getCurrentUser().then(currentUser => {
+                let logInCell = document.querySelector('div.log-in-out');
+                if  (!currentUser) {
+                    let signInButton = document.createElement('button');
+                    signInButton.textContent = 'sign-in';
+                    signInButton.addEventListener('click', this.signInClicked.bind(this));
+                    logInCell.appendChild(signInButton);
+                    return;
+                }
 
-            this.render(currentUser);
+                this.render(currentUser);
+            });
         }
 
         render(user) {
@@ -71,9 +72,10 @@
             user.username = form.querySelector('input.user-name').value;
             user.password = form.querySelector('input.user-password').value;
 
-            if (!userService.auth(user)) return;
-
-            this.render(user);
+            userService.auth(user).then(user => {
+                if  (!user) return;
+                this.render(user);
+            });
         }
     }
 
