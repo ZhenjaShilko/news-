@@ -2,61 +2,92 @@ let express = require('express'),
      app = express();
 
 let bodyParser = require('body-parser');
-let articleCV = require(__dirname + '/db/article-mapper');
-let userCV = require(__dirname + '/db/user-mapper');
+let articleController = require(__dirname + '/db/article-mapper');
+let userController = require(__dirname + '/db/user-mapper');
+let session = require('express-session');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+passport.use('local', new LocalStrategy(
+    {passReqToCallback: true},
+
+    (req, username, password, done) => {
+
+        let user = userController.getUser(username);
+
+        if (!user) return done(null, false);
+
+        if (user.password !== password) {
+            return done(null, false);
+        }
+
+        return done(null, user);
+    }));
+
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+    done(null, user);
+});
+
+app.use(session({
+    name: 'Evg',
+    secret: 'xep',
+    resave: false,
+    saveUninitialized: true,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.post('/user', passport.authenticate('local'), (req, res) => {
+    res.send({username: req.user.username});
+});
+
+app.get('/islogin', (req, res) => {
+    if (req.user) res.send({username: req.user.username});
+    else res.sendStatus(401);
+});
+
+app.delete('/logout', (req, res) => {
+    req.logout();
+    res.sendStatus(200);
+});
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/UI/news.html');
 });
 
 app.post('/article', (req, res) => {
-    articleCV.addArticle(req.body);
+    articleController.addArticle(req.body);
     res.json(req.body);
 });
 
 app.get('/article/:id', (req, res) => {
-    let article = articleCV.getArticle(req.params.id);
+    let article = articleController.getArticle(req.params.id);
     if (!article) res.send({});
     res.send(article);
 });
 
 app.delete('/article', (req, res) => {
-    articleCV.removeArticle(req.body);
+    articleController.removeArticle(req.body);
     res.send(req.body);
 });
 
 app.patch('/article', (req, res) => {
-    articleCV.update(req.body);
+    articleController.update(req.body);
     res.json(req.body);
 });
 
 app.get('/articles', (req, res) => {
-    res.send(articleCV.loadArticles());
+    res.send(articleController.loadArticles());
 });
-
-app.post('/user', (req, res) => {
-    let reqUser = req.body;
-    let users = userCV.getUsersFromDb();
-    let user = users.find(user => user.name === reqUser.name && user.password === reqUser.password);
-    if (!user) return res.status(400).send('Wrong password or userName');
-    userCV.setCurrentUserToDb(user);
-    res.json(reqUser);
-});
-
-app.get('/current_user', (req, res) => {
-
-    if (userCV.getCurrentUserFromDb().length === 0) return res.sendStatus(400);
-    res.send(userCV.getCurrentUserFromDb()[0]);
-});
-
-app.delete('/logout', (req, res) => {
-    userCV.deleteCurrentUserFromDb();
-    res.json({userWasRemoved: 'ok'});
-});
-
 
 app.listen(3000);

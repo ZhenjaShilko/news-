@@ -48,7 +48,7 @@
                 "<input class='done-button' type='button' value='done'/>";
 
             let form = document.createElement('form');
-            form.className = 'auth-form';
+            form.className = 'login-form';
             form.innerHTML = view;
             form.querySelector('input.done-button').addEventListener('click', this.doneClicked.bind(this));
             logInCell.appendChild(form);
@@ -68,11 +68,11 @@
         doneClicked() {
             let user = {};
 
-            let form = document.querySelector('form.auth-form');
+            let form = document.querySelector('form.login-form');
             user.username = form.querySelector('input.user-name').value;
             user.password = form.querySelector('input.user-password').value;
 
-            userService.auth(user).then(user => {
+            userService.login(user).then(user => {
                 if  (!user) return;
                 this.render(user);
             });
