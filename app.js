@@ -1,10 +1,10 @@
-let express = require('express'),
-     app = express();
+const express = require('express');
+const app = express();
 
-let bodyParser = require('body-parser');
-let articleController = require(__dirname + '/db/article-mapper');
-let userController = require(__dirname + '/db/user-mapper');
-let session = require('express-session');
+const bodyParser = require('body-parser');
+const articleController = require(__dirname + '/db/article-mapper');
+const userController = require(__dirname + '/db/user-mapper');
+const session = require('express-session');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -18,7 +18,7 @@ passport.use('local', new LocalStrategy(
 
     (req, username, password, done) => {
 
-        let user = userController.getUser(username);
+        const user = userController.getUser(username);
 
         if (!user) return done(null, false);
 
